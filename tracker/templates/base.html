@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  {% block meta %}{% endblock %}
+  <title>Habit Tracker - {% block title %}Home{% endblock %}</title>
+</head>
+<body>
+    <div class="menuBar">
+        <h1 class="pagetitle"><a href="{% url 'index' %}">Habit Tracker</a></h1>
+                {% if request.user.is_authenticated %}
+                    <p class='headerbuttons'>Logged in as {{ request.user }} | <a href="{% url 'user-home' %}">Habits</a> | <a href="{% url 'auth_logout' %}">Logout</a></p>
+                {% else %}
+                    <p class='headerbuttons'><a href="{% url 'auth_login' %}">Login</a>  |  <a href="{% url 'registration_register' %}">Register  </a></p>
+                {% endif %} 
+    </div>
+  {% block content %}
+  {% endblock %}
+</body>
+</html>
