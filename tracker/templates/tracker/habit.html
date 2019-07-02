@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>{{ habit.name }}</h3>
+    <p>Daily goal: {{ habit.goal }}</p>
+    {% if records %}
+        <a href="{% url 'add-record' habit.pk %}">ADD NEW RECORD</a>
+        <br>
+        <p>Your records for this habit:</p>
+        <ul>
+            {% for record in records %}
+                <li>{{ record.date }} | {{ record.actual }}</li>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>You haven't entered any records for this goal yet. <a href="{% url 'add-record' habit.pk %}">Make one now.</a></p>
+    {% endif %}
+    <br>
+    <a href="{% url 'delete' habit.pk %}">Delete this habit</a>
+{% endblock %}
