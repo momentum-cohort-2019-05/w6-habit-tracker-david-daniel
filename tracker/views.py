@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.db.models import Max, Avg
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -34,12 +35,14 @@ def habit_detail(request, pk):
 
     records = Record.objects.filter(habit=habit)
 
-    avg_record = records.aggregate(Avg('actual'))
-    
+    avg_record = records.aggregate(Avg('actual'))['actual__avg']
+    max_record = records.aggregate(Max('actual'))['actual__max']
 
     context = {
         'habit': habit,
         'records': records,
+        'avg_record': avg_record,
+        'max_record': max_record,
     }
 
     return render(request, 'tracker/habit.html', context=context)
@@ -74,6 +77,16 @@ def add_record(request, pk):
     if request.method == 'POST':
         form = AddRecord(request.POST)
         if form.is_valid():
+            if Record.objects.filter(habit=habit):
+                delta = timedelta(days=1)
+                last_record_date = Record.objects.filter(habit=habit).latest('date').date
+                record_date = form.cleaned_data['date']
+                if record_date != (last_record_date + delta):
+                    last_record_date += delta
+                    while last_record_date < record_date:
+                        blank_record = Record.objects.create(date=last_record_date, habit=habit)
+                        blank_record.save()
+                        last_record_date += delta
             record = Record.objects.create(date=form.cleaned_data['date'], actual=form.cleaned_data['actual'], habit=habit)
             record.save()
             return HttpResponseRedirect(reverse('habit-detail', args=[habit.pk]))
