@@ -1,3 +1,4 @@
+from django.db.models import Max, Avg
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -32,6 +33,9 @@ def habit_detail(request, pk):
     habit = get_object_or_404(Habit, pk=pk)
 
     records = Record.objects.filter(habit=habit)
+
+    avg_record = records.aggregate(Avg('actual'))
+    
 
     context = {
         'habit': habit,
