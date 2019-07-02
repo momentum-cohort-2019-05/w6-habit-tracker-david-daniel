@@ -3,6 +3,8 @@
 {% block content %}
     <h3>{{ habit.name }}</h3>
     <p>Daily goal: {{ habit.goal }}</p>
+    <p>Best record: {{ max_record }}</p>
+    <p>Average record: {{ avg_record }}</p>
     {% if records %}
         <a href="{% url 'add-record' habit.pk %}">ADD NEW RECORD</a>
         <br>

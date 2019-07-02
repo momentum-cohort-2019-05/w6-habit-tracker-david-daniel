@@ -34,12 +34,14 @@ def habit_detail(request, pk):
 
     records = Record.objects.filter(habit=habit)
 
-    avg_record = records.aggregate(Avg('actual'))
-    
+    avg_record = records.aggregate(Avg('actual'))['actual__avg']
+    max_record = records.aggregate(Max('actual'))['actual__max']
 
     context = {
         'habit': habit,
         'records': records,
+        'avg_record': avg_record,
+        'max_record': max_record,
     }
 
     return render(request, 'tracker/habit.html', context=context)
