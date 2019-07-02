@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %} 
+
+{% block content %}
+
+
+     
+      {% for book in book_list  %}
+      <div class="box">
+        <h1 class="lh-copy">
+            {{habit.name}}
+        </h1>
+        <h2 class="lh-copy">
+          {{habit.date}}
+      </h2>
+      <p class="lh-copy">
+        {{habit.goal}}
+    </p>
+    <p class="lh-copy">
+      {{habit.user}}
+      </p>
+      </div>
+      {% endfor%}
+
+{% endblock %}
+
+
+   

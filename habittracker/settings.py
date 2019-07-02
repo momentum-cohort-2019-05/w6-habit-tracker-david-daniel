@@ -41,9 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tracker'
 
     # Third-party
-    'debug_toolbar',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
