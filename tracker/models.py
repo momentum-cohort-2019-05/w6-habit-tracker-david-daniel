@@ -20,7 +20,7 @@ class Habit(models.Model):
 class Record(models.Model):
     habit = models.ForeignKey('Habit', on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
-    actual = models.IntegerField()
+    actual = models.IntegerField(null=True, blank=True)
     
     def __str__(self):
         return f'{self.date}'
