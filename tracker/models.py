@@ -11,6 +11,7 @@ class Habit(models.Model):
     goal = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
     def get_absolute_url(self):
         return reverse('habit-detail', args=[str(self.pk)])
 
@@ -29,3 +30,12 @@ class Record(models.Model):
     class Meta:
         ordering = ['-date']
         unique_together = ['habit', 'date']
+
+
+
+class Observer(models.Model):
+    habit = models.ForeignKey('Habit', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user}'

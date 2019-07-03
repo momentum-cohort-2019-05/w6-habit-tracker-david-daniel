@@ -28,5 +28,20 @@
         <p>You haven't entered any records for this goal yet. <a href="{% url 'add-record' habit.pk %}">Make one now.</a></p>
     {% endif %}
     <br>
+    <h3>Observers:</h3>
+    {% if habit.observer_set %}
+    <ul>
+        {% for observer in habit.observer_set.all %}
+        <li>
+            {{ observer.user.get_username }}
+            <a href="">Remove observer</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>You haven't added any observers for this habit yet! Add users to your observer list to allow them to see your progress with your habit.</p>
+    {% endif %}
+    <a href="{% url 'add-observer' habit.pk %}">Add Observer</a>
+    <br>
     <a href="{% url 'delete' habit.pk %}">Delete this habit</a>
 {% endblock %}

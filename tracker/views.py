@@ -4,8 +4,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import Habit, Record
-from .forms import AddHabit, AddRecord
+from .models import Habit, Record, Observer
+from .forms import AddHabit, AddRecord, AddObserver
 
 # Create your views here.
 def index(request):
@@ -99,3 +99,23 @@ def add_record(request, pk):
     }
 
     return render(request, 'tracker/new_record.html', context)
+
+
+def add_observer(request, pk):
+    habit = get_object_or_404(Habit, pk=pk)
+
+    if request.method == 'POST':
+        form = AddObserver(request.POST)
+        if form.is_valid():
+            new_observer = Observer.objects.create(habit=habit, user=form.cleaned_data['username'])
+            new_observer.save()
+            return HttpResponseRedirect(reverse('habit-detail', args=[habit.pk]))
+
+    else:
+        form = AddObserver()
+
+    context = {
+        'form': form, 
+    }
+
+    return render(request, 'tracker/new_observer.html', context)
