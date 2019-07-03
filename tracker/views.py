@@ -21,8 +21,12 @@ def index(request):
 def user_home(request):
     habits = Habit.objects.filter(user=request.user)
 
+    observing = Observer.objects.filter(user=request.user)
+
+
     context = {
         'habits': habits,
+        'observing': observing,
 
     }
 

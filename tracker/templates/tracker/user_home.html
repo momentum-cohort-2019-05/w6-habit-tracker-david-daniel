@@ -3,16 +3,35 @@
 {% block content %}
     <h3>Home</h3>
     <p>Welcome, {{ request.user }}!</p>
-    {% if habits %}
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            {% if habits %}
         <h3>Your habits:</h3>
-        <ul>
+        <div class="list-group">
         {% for habit in habits %}
-            <li><a href="{{ habit.get_absolute_url }}">{{ habit.name }}</a></li>
+            <a href="{{ habit.get_absolute_url }}" class="list-group-item list-group-item-action">{{ habit.name }}</a>
         {% endfor %}
-        </ul>
-    {% else %}
-        <p><strong>You haven't started tracking any habits yet!</strong> Start one now.</p>
-    {% endif %}
+        </div>
+        {% else %}
+            <p><strong>You haven't started tracking any habits yet!</strong> Start one now.</p>
+        {% endif %}
 
-    <a href="{% url 'new-habit' %}">Start a new habit</a>
+        <a href="{% url 'new-habit' %}" class="btn btn-success" role="button">Start a new habit</a>
+          </div>
+        
+          <div class="col">
+            {% if observing %}
+            <h3>Habits you're observing:</h3>
+            <div class="list-group">
+            {% for o in observing %}
+                    <a href="{{ o.habit.get_absolute_url }}"class="list-group-item list-group-item-action">{{ o.habit.name }} <span class="badge badge-primary badge-pill">{{ o.habit.user }}</span></a>
+            {% endfor %}
+            </div>
+        {% endif %}
+          </div>
+    </div>
+</div>
+    
+    
 {% endblock %}
