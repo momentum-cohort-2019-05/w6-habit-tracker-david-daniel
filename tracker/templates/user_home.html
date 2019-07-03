@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Home</h3>
+    <p>Welcome, {{ request.user }}!</p>
+    {% if habits %}
+        <h3>Your habits:</h3>
+        <ul>
+        {% for habit in habits %}
+            <li><a href="{{ habit.get_absolute_url }}">{{ habit.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p><strong>You haven't started tracking any habits yet!</strong> Start one now.</p>
+    {% endif %}
+
+    <a href="{% url 'new-habit' %}">Start a new habit</a>
+{% endblock %}
