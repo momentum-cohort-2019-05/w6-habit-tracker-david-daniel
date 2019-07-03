@@ -10,5 +10,5 @@ class AddRecord(forms.Form):
     date = forms.DateField(initial=date.today, required=True)
     actual = forms.IntegerField(min_value=0, help_text="Enter your actual data from the day.", required=True)
 
-class edit_record(forms.Form):
+class this(forms.Form):
     actual = forms.IntegerField(min_value=0)

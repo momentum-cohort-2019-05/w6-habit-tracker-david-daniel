@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    {% if request.user.is_authenticated %}
-        <a href="{% url 'user-home' %}">Your homepage</a>
-    {% else %}
-        <p>U gotta login</p>
-    {% endif %}
-{% endblock %}
