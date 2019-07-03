@@ -15,13 +15,13 @@
             {% for record in records %}
                 {% if record.actual >= habit.goal %}    
                 <li class="list-group-item list-group-item-success">{{ record.date }} | {{ record.actual }}</li>
-                <a href="" class="btn btn-outline-danger" role="button">Edit</a>
+                <a href="{% url 'edit-record' record.pk%}" class="btn btn-outline-danger" role="button">Edit</a>
                 {% elif record.actual < habit.goal %}
                 <li class="list-group-item">{{ record.date }} | {{ record.actual }}</li>
-                <a href="" class="btn btn-outline-danger" role="button">Edit</a>
+                <a href="{% url 'edit-record' record.pk%}" class="btn btn-outline-danger" role="button">Edit</a>
                 {% else %}
                 <li class="list-group-item list-group-item-danger">{{ record.date }} | {{ record.actual }}</li>
-                <a href="" class="btn btn-outline-danger" role="button">Edit</a>
+                <a href="{% url 'edit-record' record.pk%}" class="btn btn-outline-danger" role="button">Edit</a>
                 {% endif %}
             {% endfor %}
 

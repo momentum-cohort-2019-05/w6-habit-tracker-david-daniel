@@ -14,3 +14,7 @@ class AddRecord(forms.Form):
 
 class AddObserver(forms.Form):
     username = forms.ModelChoiceField(queryset=User.objects.all(), empty_label=None, to_field_name='username', required=True)
+
+
+class this(forms.Form):
+    actual = forms.IntegerField(min_value=0)

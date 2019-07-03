@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from .models import Habit, Record, Observer
-from .forms import AddHabit, AddRecord, AddObserver
+from .forms import AddHabit, AddRecord, AddObserver, this
 
 # Create your views here.
 def index(request):
@@ -123,3 +123,18 @@ def add_observer(request, pk):
     }
 
     return render(request, 'tracker/new_observer.html', context)
+
+
+def edit_record(request, pk):
+    if request.method == 'POST':
+        form = this(request.POST)
+        if form.is_valid():
+            record = Record.objects.get(pk=pk)
+            record.actual = form.cleaned_data["actual"]
+            record.save()
+            return HttpResponseRedirect(reverse('habit-detail', args=[record.habit.pk]))
+    else:
+
+        form = this()
+
+    return render(request, 'tracker/edit_record.html' , {'form': form})

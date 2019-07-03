@@ -9,4 +9,5 @@ urlpatterns = [
     path('habit/<pk>/delete/', views.delete_habit, name='delete'),
     path('habit/<pk>/add_record/', views.add_record, name='add-record'),
     path('habit/<pk>/add_observer/', views.add_observer, name='add-observer'),
+    path('habit/<pk>/edit_record/', views.edit_record, name='edit-record'),
 ]
