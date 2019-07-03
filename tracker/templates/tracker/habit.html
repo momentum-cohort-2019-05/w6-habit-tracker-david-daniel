@@ -1,25 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if request.user == habit.user %}
     <h3>{{ habit.name }}</h3>
     <p>Daily goal: {{ habit.goal }}</p>
     <p>Best record: {{ max_record }}</p>
     <p>Average record: {{ avg_record }}</p>
     {% if records %}
-        <a href="{% url 'add-record' habit.pk %}">ADD NEW RECORD</a>
+        <a href="{% url 'add-record' habit.pk %}" class="btn btn-success" role="button">ADD NEW RECORD</a>
+        <br>
         <br>
         <p>Your records for this habit:</p>
-        <ul>
+        <ul class="list-group">
             {% for record in records %}
                 {% if record.actual >= habit.goal %}    
-                <li><font color="green">{{ record.date }} | {{ record.actual }}</font></li>
-                <a href="">Edit</a>
+                <li class="list-group-item list-group-item-success">{{ record.date }} | {{ record.actual }}</li>
+                <a href="" class="btn btn-outline-danger" role="button">Edit</a>
                 {% elif record.actual < habit.goal %}
-                <li>{{ record.date }} | {{ record.actual }}</li>
-                <a href="">Edit</a>
+                <li class="list-group-item">{{ record.date }} | {{ record.actual }}</li>
+                <a href="" class="btn btn-outline-danger" role="button">Edit</a>
                 {% else %}
-                <li><font color="red">{{ record.date }} | {{ record.actual }}</font></li>
-                <a href="">Edit</a>
+                <li class="list-group-item list-group-item-danger">{{ record.date }} | {{ record.actual }}</li>
+                <a href="" class="btn btn-outline-danger" role="button">Edit</a>
                 {% endif %}
             {% endfor %}
 
@@ -28,5 +30,49 @@
         <p>You haven't entered any records for this goal yet. <a href="{% url 'add-record' habit.pk %}">Make one now.</a></p>
     {% endif %}
     <br>
-    <a href="{% url 'delete' habit.pk %}">Delete this habit</a>
+    <h3>Observers:</h3>
+    {% if habit.observer_set %}
+    <ul>
+        {% for observer in habit.observer_set.all %}
+        <li>
+            {{ observer.user.get_username }}
+            <a href="">Remove observer</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>You haven't added any observers for this habit yet! Add users to your observer list to allow them to see your progress with your habit.</p>
+    {% endif %}
+    <a href="{% url 'add-observer' habit.pk %}" class="btn btn-success" role="button">Add Observer</a>
+    <br>
+    <br>
+    <br>
+    <a href="{% url 'delete' habit.pk %}" class="btn btn-danger" role="button">Delete this habit</a>
+
+{% else %}
+    <h3>{{ habit.name }}</h3>
+    <h4>User: {{ habit.user }}</h4>
+    <p>Daily goal: {{ habit.goal }}</p>
+    <p>Best record: {{ max_record }}</p>
+    <p>Average record: {{ avg_record }}</p>
+    {% if records %}
+        <p>{{ habit.user }}'s records for this habit:</p>
+        <ul>
+            {% for record in records %}  
+                {% if record.actual >= habit.goal %}    
+                <li class="list-group-item list-group-item-success">{{ record.date }} | {{ record.actual }}</li>
+                {% elif record.actual < habit.goal %}
+                <li class="list-group-item">{{ record.date }} | {{ record.actual }}</li>
+                {% else %}
+                <li class="list-group-item list-group-item-danger">{{ record.date }} | {{ record.actual }}</li>
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>{{ habit.user }} hasn't entered any records for this goal yet.</p>
+    {% endif %}
+    <a href="{% url 'user-home' %}" class="btn btn-primary btn-lg" role="button">Back to home</a>
+
+{% endif %}
 {% endblock %}

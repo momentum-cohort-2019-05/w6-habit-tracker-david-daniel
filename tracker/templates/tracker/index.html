@@ -4,6 +4,14 @@
     {% if request.user.is_authenticated %}
         <a href="{% url 'user-home' %}">Your homepage</a>
     {% else %}
-        <p>U gotta login</p>
+    <div class="jumbotron">
+        <h1 class="display-4">Habit Tracker</h1>
+        <p class="lead">Habit Tracker is a web app designed to help you develop new, healthy habits. We use the power of peer pressure to help you achieve your goals.</p>
+        <hr class="my-4">
+        <p>Don't wait to start your new, healthier lifestyle. Sign up today. </p>
+        <a class="btn btn-primary btn-lg" href="{% url 'registration_register' %}" role="button">Create Account</a>
+      </div>
     {% endif %}
 {% endblock %}
+
+
