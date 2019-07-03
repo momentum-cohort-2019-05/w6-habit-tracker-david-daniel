@@ -13,13 +13,13 @@
             {% for record in records %}
                 {% if record.actual >= habit.goal %}    
                 <li><font color="green">{{ record.date }} | {{ record.actual }}</font></li>
-                <a href="">Edit</a>
+                <a href="{% url 'edit-record' record.pk %}">Edit Record</a>
                 {% elif record.actual < habit.goal %}
                 <li>{{ record.date }} | {{ record.actual }}</li>
-                <a href="">Edit</a>
+                <a href="{% url 'edit-record' record.pk%}">Edit Record</a>
                 {% else %}
                 <li><font color="red">{{ record.date }} | {{ record.actual }}</font></li>
-                <a href="">Edit</a>
+                <a href="{% url 'edit-record' record.pk%}">Edit Record</a>
                 {% endif %}
             {% endfor %}
 

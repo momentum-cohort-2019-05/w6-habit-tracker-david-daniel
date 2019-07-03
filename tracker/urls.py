@@ -8,4 +8,5 @@ urlpatterns = [
     path('new_habit/', views.create_habit, name='new-habit'),
     path('habit/<pk>/delete/', views.delete_habit, name='delete'),
     path('habit/<pk>/add_record/', views.add_record, name='add-record'),
+    path('habit/<pk>/edit_record/', views.edit_record, name='edit-record'),
 ]
